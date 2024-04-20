@@ -1,0 +1,70 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<form asp-action="crearusuario">
+
+<h2>Ingresar Usuario: </h2>
+<h5>Nombre de usuario: </h5> @Html.TextBox("txtUserName", " ", new { @class = "form-control" })
+<h5>Contraseña: </h5> @Html.Password("Contrasena", "", new { @class = "form-control" })
+<h5>Género: </h5> @Html.RadioButton("Genero", "Masculino", true, new { id = "masculino" }) Masculino @Html.RadioButton("Genero", "Femenino", false, new { id = "femenino" }) Femenino
+<h5>Dirección:</h5> @Html.TextArea("Direccion", "Ingrese su direccion", new { @class = "form-control", id = "idDireccion" })
+<h5>Pasatiempos: </h5> <label>Bailar</label> @Html.CheckBox("Bailar")  <label>Correr</label> @Html.CheckBox("Correr")  <label>Ver peliculas</label> @Html.CheckBox("Ver peliculas")
+@{
+    IEnumerable<string> strList = new List<string> { "POO", "TW", "MAT3", "FIS1" };
+}
+<h5>Curso: </h5> @Html.DropDownList("ddlCurso", new SelectList(strList, strList.FirstOrDefault()), "--Seleccionar curso ----")
+<h5>Conocimientos: </h5> @Html.Label("Seleccionar: ")
+<br />
+@Html.ListBox("Seleccionar habilidades", new List<SelectListItem>{
+new SelectListItem {Text = "C #", Value = "1"},
+new SelectListItem {Text = "ASP.NET", Value = "2"},
+new SelectListItem {Text = "ASP.NET Core", Value = "3"},
+new SelectListItem {Text = "Azure", Value = "4"}
+})
+<h5>Seleccion el rol:</h5> @Html.DropDownList("id_rol", ViewData["listrol"] as SelectList, "Seleccione un rol", new { @class = "form-control" })
+<br />
+<br />
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    <input type="submit" class="btn-success" value="Guardar" />
+}
+
+<br />
+<br/>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>nombre</th>
+            <th>Direccion</th>
+            <th>curso</th>
+            <th>rol</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in (IEnumerable<dynamic>)ViewData["listusuariorol"])
+        {
+            <tr>
+                <td>@usuario.nombre</td>
+                <td>@usuario.direccion</td>
+                <td>@usuario.curso</td>
+                <td>@usuario.rol</td>
+            </tr>
+        }
+    </tbody>
+</table>
